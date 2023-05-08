@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Contoh AJAX dengan metode GET</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #bbbbbb;
+        }
+
+        th {
+            background-color: #516c76;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Spaceflight related news</h1>
+    <table id="spacenews">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Url</th>
+                <th>News Site</th>
+                <th>Published</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "https://api.spaceflightnewsapi.net/v3/articles",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (i, spacenews) {
+                        var row = $("<tr>");
+                        $("<td>").text(spacenews.title).appendTo(row);
+                        $("<td>").text(spacenews.url).appendTo(row);
+                        $("<td>").text(spacenews.newsSite).appendTo(row);
+                        $("<td>").text(spacenews.publishedAt).appendTo(row);
+                        $("#spacenews tbody").append(row);
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
